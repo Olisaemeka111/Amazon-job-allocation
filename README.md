@@ -69,6 +69,87 @@ pnpm dev
 - **Email**: admin@amazon-warehouse.com
 - **Password**: admin123
 
+## Deployment
+
+### Production Build
+
+```bash
+# Create a production build
+pnpm build
+
+# Start the production server
+pnpm start
+```
+
+### Deployment Options
+
+#### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Configure the build settings:
+   - Framework Preset: Next.js
+   - Build Command: `pnpm build`
+   - Output Directory: `.next`
+3. Add environment variables in the Vercel dashboard
+4. Deploy
+
+#### Docker
+A Dockerfile is provided for containerized deployment:
+
+```bash
+# Build the Docker image
+docker build -t amazon-job-allocation .
+
+# Run the container
+docker run -p 3000:3000 amazon-job-allocation
+```
+
+#### AWS Elastic Beanstalk
+1. Create an Elastic Beanstalk environment with Node.js platform
+2. Package the application: `zip -r deploy.zip . -x "node_modules/*" ".git/*"`
+3. Upload the zip file to Elastic Beanstalk
+4. Configure environment variables in the AWS console
+
+#### Self-Hosted
+1. Set up a Linux server with Node.js installed
+2. Use PM2 for process management:
+   ```bash
+   npm install -g pm2
+   pm2 start npm --name "amazon-job-allocation" -- start
+   pm2 save
+   pm2 startup
+   ```
+
+## Infrastructure Requirements
+
+### Database
+- **Development**: In-memory database (included)
+- **Production**: Supabase or PostgreSQL
+  - Minimum specs: 2 vCPUs, 4GB RAM
+  - Storage: Start with 10GB, scale as needed
+
+### Server Requirements
+- **Minimum**: 2 vCPUs, 2GB RAM
+- **Recommended**: 4 vCPUs, 8GB RAM
+- **Storage**: 20GB SSD
+
+### Scaling Considerations
+- Use load balancing for high-traffic environments
+- Consider serverless deployment for cost-efficiency
+- Database connection pooling recommended for high concurrency
+
+### Monitoring
+- Set up application monitoring with services like:
+  - New Relic
+  - Datadog
+  - AWS CloudWatch
+
+### Security Considerations
+- Enable HTTPS/TLS
+- Implement rate limiting
+- Set up regular database backups
+- Use environment variables for sensitive information
+- Implement proper user authentication and authorization
+
 ## Application Structure
 
 - **/app**: Next.js app directory structure with routes and pages
