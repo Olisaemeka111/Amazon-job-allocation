@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart3, Clock, Cog, Home, LayoutDashboard, LogOut, User, Users } from "lucide-react"
+import { BarChart3, Clock, Cog, Home, LayoutDashboard, LogOut, User, Users, ClipboardList } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -27,6 +27,11 @@ const sidebarNavItems = [
     title: "Employees",
     href: "/employees",
     icon: Users,
+  },
+  {
+    title: "Tasks",
+    href: "/tasks",
+    icon: ClipboardList,
   },
   {
     title: "Task Allocation",
