@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Search, Filter, UserPlus, Edit, Trash2 } from "lucide-react"
+import { Icon } from "@/components/ui/icon-fix"
 import { EmployeeForm } from "@/components/employee-form"
 import { toast } from "sonner"
 
@@ -111,7 +111,7 @@ export default function EmployeesPage() {
         <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
           <DialogTrigger asChild>
             <Button>
-              <UserPlus className="mr-2 h-4 w-4" />
+              <Icon name="UserPlus" className="mr-2 h-4 w-4" />
               Add Employee
             </Button>
           </DialogTrigger>
@@ -139,7 +139,7 @@ export default function EmployeesPage() {
             <CardContent>
               <div className="flex items-center mb-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Icon name="Search" className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search by name, email, skills or certifications..."
                     className="pl-8"
@@ -148,7 +148,7 @@ export default function EmployeesPage() {
                   />
                 </div>
                 <Button variant="outline" className="ml-2">
-                  <Filter className="mr-2 h-4 w-4" />
+                  <Icon name="Filter" className="mr-2 h-4 w-4" />
                   Filters
                 </Button>
               </div>
@@ -161,7 +161,7 @@ export default function EmployeesPage() {
                 <div className="flex flex-col items-center justify-center h-40">
                   <p className="text-muted-foreground mb-2">No employees found</p>
                   <Button variant="outline" onClick={() => setShowAddDialog(true)}>
-                    <UserPlus className="mr-2 h-4 w-4" />
+                    <Icon name="UserPlus" className="mr-2 h-4 w-4" />
                     Add Your First Employee
                   </Button>
                 </div>
@@ -217,7 +217,7 @@ export default function EmployeesPage() {
                           <Dialog>
                             <DialogTrigger asChild>
                               <Button variant="ghost" size="icon" onClick={() => setEditingEmployee(employee)}>
-                                <Edit className="h-4 w-4" />
+                                <Icon name="Edit" className="h-4 w-4" />
                               </Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[800px]">
@@ -231,7 +231,7 @@ export default function EmployeesPage() {
                             </DialogContent>
                           </Dialog>
                           <Button variant="ghost" size="icon" onClick={() => handleDeleteEmployee(employee.id)}>
-                            <Trash2 className="h-4 w-4" />
+                            <Icon name="Trash2" className="h-4 w-4" />
                           </Button>
                         </TableCell>
                       </TableRow>

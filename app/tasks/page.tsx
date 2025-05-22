@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Search, Filter, Plus, Edit, Trash2 } from "lucide-react"
+import { Icon } from "@/components/ui/icon-fix"
 import { TaskForm } from "@/components/task-form"
 import { toast } from "sonner"
 
@@ -118,7 +118,7 @@ export default function TasksPage() {
       case "in-progress":
         return <Badge variant="default">In Progress</Badge>
       case "completed":
-        return <Badge variant="success">Completed</Badge>
+        return <Badge variant="default" className="bg-green-500 hover:bg-green-600">Completed</Badge>
       case "blocked":
         return <Badge variant="destructive">Blocked</Badge>
       default:
@@ -138,11 +138,12 @@ export default function TasksPage() {
         <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
           <DialogTrigger asChild>
             <Button>
-              <Plus className="mr-2 h-4 w-4" />
+              <Icon name="Plus" className="mr-2 h-4 w-4" />
               Add Task
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[800px]">
+            <DialogTitle className="sr-only">Create New Task</DialogTitle>
             <TaskForm onSuccess={() => {
               setShowAddDialog(false)
               fetchTasks()
@@ -166,7 +167,7 @@ export default function TasksPage() {
             <CardContent>
               <div className="flex items-center mb-4">
                 <div className="relative flex-1">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Icon name="Search" className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search by type, location or required skills..."
                     className="pl-8"
@@ -175,7 +176,7 @@ export default function TasksPage() {
                   />
                 </div>
                 <Button variant="outline" className="ml-2">
-                  <Filter className="mr-2 h-4 w-4" />
+                  <Icon name="Filter" className="mr-2 h-4 w-4" />
                   Filters
                 </Button>
               </div>
@@ -188,7 +189,7 @@ export default function TasksPage() {
                 <div className="flex flex-col items-center justify-center h-40">
                   <p className="text-muted-foreground mb-2">No tasks found</p>
                   <Button variant="outline" onClick={() => setShowAddDialog(true)}>
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Icon name="Plus" className="mr-2 h-4 w-4" />
                     Add Your First Task
                   </Button>
                 </div>
@@ -233,10 +234,11 @@ export default function TasksPage() {
                           <Dialog>
                             <DialogTrigger asChild>
                               <Button variant="ghost" size="icon" onClick={() => setEditingTask(task)}>
-                                <Edit className="h-4 w-4" />
+                                <Icon name="Edit" className="h-4 w-4" />
                               </Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[800px]">
+                              <DialogTitle className="sr-only">Edit Task</DialogTitle>
                               <TaskForm 
                                 initialData={task} 
                                 onSuccess={() => {
@@ -247,7 +249,7 @@ export default function TasksPage() {
                             </DialogContent>
                           </Dialog>
                           <Button variant="ghost" size="icon" onClick={() => handleDeleteTask(task.id)}>
-                            <Trash2 className="h-4 w-4" />
+                            <Icon name="Trash2" className="h-4 w-4" />
                           </Button>
                         </TableCell>
                       </TableRow>

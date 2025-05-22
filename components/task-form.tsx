@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { X } from "lucide-react"
+import { X as XIcon } from "lucide-react"
 import { toast } from "sonner"
 
 const taskFormSchema = z.object({
@@ -246,15 +246,15 @@ export function TaskForm({ initialData, onSuccess }: TaskFormProps) {
                   <FormItem>
                     <FormLabel>Assigned To</FormLabel>
                     <Select 
-                      onValueChange={(value) => field.onChange(value ? parseInt(value) : null)} 
-                      defaultValue={field.value?.toString() || ""}>
+                      onValueChange={(value) => field.onChange(value === "unassigned" ? null : parseInt(value))} 
+                      defaultValue={field.value?.toString() || "unassigned"}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="">Unassigned</SelectItem>
+                        <SelectItem value="unassigned">Unassigned</SelectItem>
                         {employees.map((employee) => (
                           <SelectItem key={employee.id} value={employee.id.toString()}>
                             {employee.name}
@@ -296,7 +296,7 @@ export function TaskForm({ initialData, onSuccess }: TaskFormProps) {
                       {form.watch("required_skills")?.map((skill) => (
                         <Badge key={skill} variant="outline" className="flex items-center gap-1">
                           {skill}
-                          <X 
+                          <XIcon 
                             className="h-3 w-3 cursor-pointer" 
                             onClick={() => removeSkill(skill)}
                           />

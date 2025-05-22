@@ -1,5 +1,5 @@
+import { Icon } from "@/components/ui/icon-fix"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Package, Clock, AlertTriangle } from "lucide-react"
 
 export function OverviewStats() {
   return (
@@ -7,7 +7,7 @@ export function OverviewStats() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Active Associates</CardTitle>
-          <Users className="h-4 w-4 text-muted-foreground" />
+          <Icon name="Users" className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">187/245</div>
@@ -17,7 +17,7 @@ export function OverviewStats() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Tasks in Queue</CardTitle>
-          <Package className="h-4 w-4 text-muted-foreground" />
+          <Icon name="Package" className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">342</div>
@@ -29,7 +29,7 @@ export function OverviewStats() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Allocation Rate</CardTitle>
-          <Clock className="h-4 w-4 text-muted-foreground" />
+          <Icon name="Clock" className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">98.2%</div>
@@ -41,7 +41,7 @@ export function OverviewStats() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">System Health</CardTitle>
-          <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+          <Icon name="AlertTriangle" className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">Optimal</div>

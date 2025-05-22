@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { initDatabase, isUsingFallback } from "@/lib/db-client"
+import { initDatabase, isUsingFallback, getConnectionError } from "@/lib/db-client"
 
 // Track initialization status
 let isInitializing = false
@@ -25,6 +25,7 @@ export async function GET(request: NextRequest) {
       success: true,
       message: "Database already initialized",
       usingFallback: isUsingFallback(),
+      connectionError: getConnectionError()?.message || null,
     })
   }
 
@@ -35,6 +36,7 @@ export async function GET(request: NextRequest) {
       success: false,
       message: "Database initialization in progress",
       usingFallback: isUsingFallback(),
+      connectionError: getConnectionError()?.message || null,
     })
   }
 
@@ -45,6 +47,7 @@ export async function GET(request: NextRequest) {
       {
         error: "Failed to initialize database: " + lastError.message,
         usingFallback: isUsingFallback(),
+        connectionError: getConnectionError()?.message || null,
       },
       { status: 200 }, // Return 200 even for errors to allow the UI to handle it
     )
@@ -67,6 +70,7 @@ export async function GET(request: NextRequest) {
         {
           error: "Failed to initialize database: " + lastError.message,
           usingFallback: result.usingFallback,
+          connectionError: getConnectionError()?.message || null,
         },
         { status: 200 }, // Return 200 even for errors to allow the UI to handle it
       )
@@ -78,6 +82,7 @@ export async function GET(request: NextRequest) {
       success: true,
       message: "Database initialized successfully",
       usingFallback: result.usingFallback,
+      connectionError: getConnectionError()?.message || null,
     })
   } catch (error) {
     isInitializing = false
@@ -88,6 +93,7 @@ export async function GET(request: NextRequest) {
       {
         error: "Failed to initialize database: " + (error instanceof Error ? error.message : "Unknown error"),
         usingFallback: true,
+        connectionError: getConnectionError()?.message || null,
       },
       { status: 200 }, // Return 200 even for errors to allow the UI to handle it
     )

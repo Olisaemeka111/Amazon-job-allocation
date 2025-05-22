@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context"
 import { Sidebar } from "@/components/sidebar"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { Bug, Loader2 } from "lucide-react"
+import { Bug as Bug, Loader2 as Loader2 } from "lucide-react"
 import { initializeDatabase } from "@/lib/init-db"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 

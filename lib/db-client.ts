@@ -1,14 +1,26 @@
 import { hash, compare } from "bcryptjs"
 import { dummyDb } from "./dummy-db"
+import * as dbAdapter from "./database-adapter"
 
 // Flag to track if we're using the fallback database
 let usingFallback = true
+let connectionError: Error | null = null
 
 // Simple query executor for in-memory database
 export async function executeQuery(query: string, params: any[] = []) {
   console.log(`Executing query: ${query.substring(0, 50)}...`)
 
   try {
+    // Try to use the real database first
+    if (!usingFallback) {
+      try {
+        return await dbAdapter.executeQuery(query, params);
+      } catch (error) {
+        console.error("Database adapter error, falling back to dummy database:", error)
+        usingFallback = true;
+      }
+    }
+
     // Use in-memory database as fallback
     // Simple query parser for basic operations
     if (query.toUpperCase().startsWith("SELECT")) {
@@ -105,46 +117,92 @@ export async function executeQuery(query: string, params: any[] = []) {
   }
 }
 
-// Initialize database tables
+// Initialize the database
 export async function initDatabase() {
-  console.log("Starting database initialization...")
-
+  console.log('Starting database initialization...');
+  
   try {
-    // Always use in-memory database for deployment
-    usingFallback = true
-
-    // Test connection
-    await executeQuery("SELECT 1")
-    console.log("Database connection successful")
-
-    // Check if admin user exists, if not create default admin
-    const adminResult = await executeQuery("SELECT COUNT(*) as count FROM users WHERE role = 'admin';")
-    const count = adminResult.rows?.[0]?.count || 0
-    console.log(`Found ${count} admin users`)
-
-    if (count === 0) {
-      console.log("Creating default admin user...")
-      await executeQuery("INSERT INTO users (email, password, name, role) VALUES (?, ?, ?, ?);", [
-        "admin@amazon-warehouse.com",
-        "$2a$10$8OwZ1wG9Y5.lQOJ2QrUoWO9RQzaby/Hg.jWQ.TD8KI0.fNrEPD7nS", // admin123
-        "System Administrator",
-        "admin",
-      ])
-      console.log("Default admin user created")
+    // First, try to initialize using the Supabase adapter
+    console.log('Attempting to connect to Supabase database...');
+    const result = await dbAdapter.initDatabase();
+    
+    if (result.success) {
+      // Successfully connected to Supabase
+      usingFallback = false;
+      connectionError = null;
+      console.log('Supabase database initialization completed successfully');
+      return { success: true, usingFallback: false };
+    } else {
+      // Connection failed, use in-memory fallback
+      console.log('Connection to Supabase failed, using in-memory fallback database');
+      usingFallback = true;
+      connectionError = result.error instanceof Error 
+        ? result.error 
+        : new Error(typeof result.error === 'object' 
+            ? JSON.stringify(result.error) 
+            : String(result.error || 'Unknown error'));
+      
+      // Initialize the in-memory database
+      await initInMemoryDatabase();
+      
+      console.log('In-memory database initialization completed successfully');
+      return { success: true, usingFallback: true, connectionError };
     }
-
-    console.log("Database initialization completed successfully")
-    return { success: true, usingFallback }
   } catch (error) {
-    console.error("Database initialization error:", error)
-    usingFallback = true
-    return { success: false, usingFallback: true, error }
+    // Error during initialization, use in-memory fallback
+    console.error('Database initialization error:', error);
+    usingFallback = true;
+    connectionError = error instanceof Error 
+      ? error 
+      : new Error(typeof error === 'object' 
+          ? JSON.stringify(error) 
+          : String(error || 'Unknown error'));
+    
+    // Initialize the in-memory database
+    await initInMemoryDatabase();
+    
+    console.log('In-memory database initialization completed successfully');
+    return { success: true, usingFallback: true, connectionError };
   }
 }
 
-// Function to check database connection status
+// Initialize the in-memory database
+async function initInMemoryDatabase() {
+  console.log('Initializing in-memory database...');
+  
+  // Set up tables
+  await executeQuery('SELECT 1');
+  
+  // Check if admin user exists
+  const admins = await getAllUsers().then(users => users.filter(user => user.role === 'admin'));
+  
+  if (admins.length === 0) {
+    console.log('Creating default admin user...');
+    const hashedPassword = "$2a$10$8OwZ1wG9Y5.lQOJ2QrUoWO9RQzaby/Hg.jWQ.TD8KI0.fNrEPD7nS"; // admin123
+    
+    await createUser({
+      email: 'admin@amazon-warehouse.com',
+      password: hashedPassword,
+      name: 'System Administrator',
+      role: 'admin'
+    });
+    
+    console.log('Default admin user created');
+  }
+}
+
+/**
+ * Check if we're using the fallback database
+ */
 export function isUsingFallback() {
-  return usingFallback
+  return usingFallback;
+}
+
+/**
+ * Get the last connection error if any
+ */
+export function getConnectionError() {
+  return connectionError;
 }
 
 // Special direct authentication function for admin

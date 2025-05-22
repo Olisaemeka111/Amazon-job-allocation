@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Play, Pause, RefreshCw, Settings } from "lucide-react"
+import { Icon } from "@/components/ui/icon-fix"
 import { useState } from "react"
 
 export function AllocationEngine() {
@@ -106,16 +106,16 @@ export function AllocationEngine() {
       <CardFooter className="flex justify-between">
         <div className="flex space-x-2">
           <Button variant="outline" size="sm" onClick={toggleEngine}>
-            {engineStatus === "running" ? <Pause className="h-4 w-4 mr-2" /> : <Play className="h-4 w-4 mr-2" />}
+            {engineStatus === "running" ? <Icon name="Pause" className="h-4 w-4 mr-2" /> : <Icon name="Play" className="h-4 w-4 mr-2" />}
             {engineStatus === "running" ? "Pause Engine" : "Start Engine"}
           </Button>
           <Button variant="outline" size="sm">
-            <RefreshCw className="h-4 w-4 mr-2" />
+            <Icon name="RefreshCw" className="h-4 w-4 mr-2" />
             Run Optimization
           </Button>
         </div>
         <Button variant="ghost" size="sm">
-          <Settings className="h-4 w-4 mr-2" />
+          <Icon name="Settings" className="h-4 w-4 mr-2" />
           Engine Settings
         </Button>
       </CardFooter>

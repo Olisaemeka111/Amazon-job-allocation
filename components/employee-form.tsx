@@ -11,7 +11,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
-import { X } from "lucide-react"
+import { X as XIcon } from "lucide-react"
 import { toast } from "sonner"
 
 const employeeFormSchema = z.object({
@@ -280,7 +280,7 @@ export function EmployeeForm({ initialData, onSuccess }: EmployeeFormProps) {
                       {form.watch("skills")?.map((skill) => (
                         <Badge key={skill} variant="outline" className="flex items-center gap-1">
                           {skill}
-                          <X 
+                          <XIcon 
                             className="h-3 w-3 cursor-pointer" 
                             onClick={() => removeSkill(skill)}
                           />
@@ -318,7 +318,7 @@ export function EmployeeForm({ initialData, onSuccess }: EmployeeFormProps) {
                       {form.watch("certifications")?.map((cert) => (
                         <Badge key={cert} variant="outline" className="flex items-center gap-1">
                           {cert}
-                          <X 
+                          <XIcon 
                             className="h-3 w-3 cursor-pointer" 
                             onClick={() => removeCertification(cert)}
                           />

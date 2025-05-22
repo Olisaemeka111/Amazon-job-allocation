@@ -202,3 +202,72 @@ This project is proprietary and confidential.
 - Built using Next.js framework
 - UI components based on shadcn/ui
 - Icons from Lucide React
+
+## Setup
+
+### Prerequisites
+
+- Node.js 18 or later
+- npm or pnpm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Create a `.env.local` file with your Supabase credentials:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xghxfzeojrwpvdpazova.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhnaHhmemVvanJ3cHZkcGF6b3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5MjYyODYsImV4cCI6MjA2MzUwMjI4Nn0.U1JFjtPWWPFEdVl3eJa-l3xIXQBKPSg4wwP_UjYnvEE
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhnaHhmemVvanJ3cHZkcGF6b3ZhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NzkyNjI4NiwiZXhwIjoyMDYzNTAyMjg2fQ.qM8ZKVNPlXAEMQ23favbbeE76lKGCc4p5S7_FATH4LQ
+```
+
+### Database Setup
+
+The application uses Supabase as the database. 
+
+To set up the database tables, you need to execute the SQL script in the Supabase SQL editor:
+
+1. Go to your Supabase project dashboard
+2. Navigate to the SQL Editor
+3. Open the file `scripts/supabase-tables.sql` from this project
+4. Copy and paste the SQL content into the Supabase SQL Editor
+5. Run the script to create tables and seed initial data
+
+Alternatively, you can run:
+
+```bash
+pnpm setup-supabase
+```
+
+This will check for existing tables and guide you through what needs to be created.
+
+### Starting the Application
+
+Run the development server:
+
+```bash
+pnpm dev
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Authentication
+
+The default admin credentials are:
+
+- Email: admin@amazon-warehouse.com
+- Password: admin123
+
+## Fallback Database
+
+If the connection to Supabase fails, the application will automatically use an in-memory database for development purposes.
+
+## License
+
+MIT

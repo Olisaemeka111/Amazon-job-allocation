@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-db": "node scripts/setup-database.js",
+    "setup-mysql": "node scripts/setup-mysql.js",
+    "test-db": "node scripts/test-supabase.js",
+    "setup-supabase": "node scripts/create-supabase-tables.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -45,11 +49,14 @@
     "cmdk": "1.0.4",
     "crypto": "latest",
     "date-fns": "4.1.0",
+    "dotenv": "^16.5.0",
     "embla-carousel-react": "8.5.1",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
+    "mysql2": "^3.14.1",
     "next": "15.2.4",
     "next-themes": "^0.4.4",
+    "node-fetch": "^2.7.0",
     "react": "^19",
     "react-day-picker": "8.10.1",
     "react-dom": "^19",

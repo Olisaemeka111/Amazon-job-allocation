@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { AlertCircle, AlertTriangle, Info, Clock } from "lucide-react"
+import { AlertCircle as AlertCircle, AlertTriangle as AlertTriangle, Info as Info, Clock as Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useAppData } from "@/lib/data-context"

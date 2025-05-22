@@ -4,6 +4,10 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/lib/auth-context"
 import { DataProvider } from "@/lib/data-context"
+import { AppShell } from "@/components/app-shell"
+
+// Make sure we use a consistent version of the Icon component throughout the app
+export { Icon } from "@/components/ui/icon-fix"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,7 +27,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthProvider>
-            <DataProvider>{children}</DataProvider>
+            <DataProvider>
+              <AppShell>{children}</AppShell>
+            </DataProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
