@@ -93,15 +93,32 @@ pnpm start
 4. Deploy
 
 #### Docker
-A Dockerfile is provided for containerized deployment:
+The project includes Docker configuration for containerized deployment:
 
 ```bash
-# Build the Docker image
+# Build and run only the application
 docker build -t amazon-job-allocation .
-
-# Run the container
 docker run -p 3000:3000 amazon-job-allocation
 ```
+
+For a complete deployment with PostgreSQL database and pgAdmin:
+
+```bash
+# Start the entire stack with docker-compose
+docker-compose up -d
+
+# Stop the services
+docker-compose down
+
+# To retain the database data even after removing containers:
+docker-compose down -v
+```
+
+Access the services:
+- Application: http://localhost:3000
+- pgAdmin: http://localhost:5050 (Email: admin@amazon.com, Password: admin)
+
+**Note:** For production use, change the default credentials in the docker-compose.yml file.
 
 #### AWS Elastic Beanstalk
 1. Create an Elastic Beanstalk environment with Node.js platform
